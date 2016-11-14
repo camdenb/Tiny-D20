@@ -25,12 +25,14 @@ RollConfig.cast = function(rollConfig) {
  * alwaysShowAdvanced: Boolean
  * showRollAnimation: Boolean
  * macros: Macro[]
+ * onlyShowMacroName: Boolean
  **/
-function Configuration(iconColor, alwaysShowAdvanced, showRollAnimation, macros) {
+function Configuration(iconColor, alwaysShowAdvanced, showRollAnimation, macros, onlyShowMacroName) {
     this.iconColor = iconColor;
     this.alwaysShowAdvanced = alwaysShowAdvanced;
     this.showRollAnimation = showRollAnimation;
     this.macros = macros;
+    this.onlyShowMacroName = onlyShowMacroName;
 }
 
 /**

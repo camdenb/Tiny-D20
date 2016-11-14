@@ -11,6 +11,7 @@ function addEventHandlers() {
     $("#color").change(saveCurrentConfiguration);
     $("#alwaysShowAdvanced").change(saveCurrentConfiguration);
     $("#rollAnimation").change(saveCurrentConfiguration);
+    $("#onlyShowMacroName").change(saveCurrentConfiguration);
     resetMacroInputHandlers();
 }
 
@@ -37,6 +38,7 @@ function setConfiguration(config) {
     $("#color").val(config.iconColor);
     $("#alwaysShowAdvanced").prop("checked", config.alwaysShowAdvanced);
     $("#rollAnimation").prop("checked", config.showRollAnimation);
+    $("#onlyShowMacroName").prop("checked", config.onlyShowMacroName);
     updateTable();
 
     var color = config.iconColor;
@@ -50,8 +52,9 @@ function saveCurrentConfiguration() {
     var color = $("#color").val();
     var alwaysShowAdvanced = $("#alwaysShowAdvanced").prop("checked");
     var showRollAnimation = $("#rollAnimation").prop("checked");
+    var onlyShowMacroName = $("#onlyShowMacroName").prop("checked");
     var macros = currentConfiguration.macros;
-    newConfig = new Configuration(color, alwaysShowAdvanced, showRollAnimation, macros);
+    newConfig = new Configuration(color, alwaysShowAdvanced, showRollAnimation, macros, onlyShowMacroName);
 
     currentConfiguration = newConfig;
     setConfiguration(currentConfiguration);

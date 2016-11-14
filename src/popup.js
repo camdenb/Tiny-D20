@@ -53,7 +53,14 @@ function loadMacrosList() {
 		for(var i = 0; i < macrosList.length; i++) {
             var name = macrosList[i].name;
             var rollConfig = RollConfig.cast(macrosList[i].rollConfig).toString();
-			newHTML += "<input type=button class='macroButton' value='" + name + " (" + rollConfig + ")' id='macro" + i + "'>";
+            var rollConfigHTML = " (" + rollConfig + ")";
+            var htmlStart = "<input type=button class='macroButton' value='" + name;
+            newHTML += htmlStart;
+            if (!config.onlyShowMacroName) {
+                newHTML += rollConfigHTML;
+            }
+            var htmlEnd = "' id='macro" + i + "'>";
+			newHTML += htmlEnd;
 		}
 		$("#macros_list").html(newHTML);
 		initMacroBindings();
