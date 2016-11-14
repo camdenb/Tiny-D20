@@ -2,6 +2,8 @@ window.onload = init;
 
 var advancedIsShown = false;
 var config = null;
+var rollsLeft = ROLLS_PER_ANIMATION;
+var rollTimer = null;
 
 function init() {
     loadConfig(function() {
@@ -43,6 +45,7 @@ function updateRollButton() {
 
 function rollClickHandler(event) {
     var rollConfig = captureCurrentRollConfig();
+    rollsLeft = ROLLS_PER_ANIMATION;
     roll(rollConfig);
 }
 
@@ -95,6 +98,22 @@ function roll(rollConfig) {
         rollsArray[rollNumber] = currentRoll;
     }
     total += rollConfig.modifier;
+
+    if (config.showRollAnimation) {
+        if (rollsLeft > 0) {
+            if (!$("#result").hasClass("temp_roll")) {
+                $("#result").addClass("temp_roll");
+            }
+            rollTimer = setTimeout(function() {
+                roll(rollConfig);
+                rollsLeft--;
+            }, ROLL_DELAY + (ROLLS_PER_ANIMATION - rollsLeft) * ROLL_INCREMENT);
+        } else {
+            $("#result").removeClass("temp_roll");
+            rollsLeft = ROLLS_PER_ANIMATION;
+            clearTimeout(rollTimer);
+        }
+    }
 
     setResult(total);
     $("#toggle-advanced").show();
