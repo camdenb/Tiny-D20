@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>D20</title>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css">
+	<link rel="stylesheet" type="text/css" href="main.css" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script src="../lib/jquery.min.js"></script>
+	<script src="popup.js"></script>
+</head>
+<body>
+	<div id="main">
+		<div id="top-container">
+			<div id="die-type-container">
+				<input type="radio" id="d4" name="die-type" value="4">
+				<label for="d4">d4</label>
+				<input type="radio" id="d6" name="die-type" value="6">
+				<label for="d6">d6</label>
+				<input type="radio" id="d8" name="die-type" value="8">
+				<label for="d8">d8</label>
+				<input type="radio" id="d10" name="die-type" value="10">
+				<label for="d10">d10</label>
+				<input type="radio" id="d12" name="die-type" value="12">
+				<label for="d12">d12</label>
+				<input type="radio" id="d20" name="die-type" value="20" checked>
+				<label for="d20">d20</label>
+				<input type="radio" id="d100" name="die-type" value="100">
+				<label for="d100">d100</label>
+			</div>
+			<hr class="thin-line">
+			<div id="num-rolls-container" class="addtl-info">
+				<h3 class="prompt">Number of Rolls</h3>
+				<input type="text" id="num-rolls" class="control" value="1">
+			</div>
+			<div id="die-mod-container" class="addtl-info">
+				<h3 class="prompt">Modifier</h3>
+				<input type="text" id="modifier" class="control" value="0">
+			</div>
+			
+			<div id='custom-roll-container'>
+				<h4>or</h4>
+
+				<input type="text" placeholder="Enter a custom roll..." id='custom-rolls-field'>
+			</div>
+			
+		</div>
+
+		<hr class="thin-line">
+
+		<div id="result-container">
+			
+			<h1 id="result">0</h1>
+			<input type="button" id="roll" value="Roll!">
+			<div id="macros_list">
+			</div>
+			<hr class="thin-line">
+			<input type="button" id="options" value="Options...">
+			<input type="button" id="toggle-advanced" value="Advanced Results...">
+		</div>
+
+		<div id="advanced">
+			<hr class="thin-line">
+
+			<table id="minmax-table">
+				<tr>
+					<th>Min</th>
+					<th>Max</th>
+				</tr>
+				<tr>
+					<td id="minmax-table-min"></td>
+					<td id="minmax-table-max"></td>
+				</tr>
+			</table>
+
+			<table id="results-table">
+			</table>
+
+		</div>
+			
+	</div>
+</body>
+</html>

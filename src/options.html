@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Tiny D20 Options</title>
+	<link rel="stylesheet" type="text/css" href="options.css" />
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<script src="../lib/jquery.min.js"></script>
+	<script src="objects.js"></script>
+	<script src="options.js"></script>
+</head>
+<body>
+	
+	<p class="option">
+		<label for="color" class="title">Icon Color:</label>
+		<select id="color" class="control">
+			<option value="white">White</option>
+			<option value="black">Black</option>
+			<option value="blue">Blue</option>
+			<option value="red">Red</option>
+			<option value="rainbow">Rainbow</option>
+		</select>
+	</p>
+	
+	<p class="option">
+		<label for="alwaysShowAdvanced" class="title">Always Show Advanced Results:</label>
+		<input type="checkbox" id="alwaysShowAdvanced" value="advStartsOpen">
+	</p>
+
+	<p class="option">
+		<label for="rollAnimation" class="title">Show Roll Animation:</label>
+		<input type="checkbox" id="rollAnimation" value="rollAnimation" checked>
+	</p>
+
+	<p class="option">
+		<label for="macro_table" class="title">Macros</label>
+		
+		<div class="macros_container">
+			<table id='macro_table'>
+				<tr>
+					<th>Name</th>
+					<th>Value<br><span class='subtext'>(Must be in format XdY or XdY+Z or XdY-Z)</span></th>
+					<th>Options</th>
+				</tr>
+				<tr>
+					<td>
+						<input type="text" placeholder="Name (ex: Short Sword)" id="macro_name" />
+					</td>
+					<td>
+						<input type="text" placeholder="Value (ex: 2d20+1)" id="macro_value" />
+					</td>
+					<td>
+						<input type="button" value="Create Macro" class="btn_create" />
+					</td>
+				</tr>
+			</table>
+		</div>
+	</p>
+
+	<h5><a href="https://chrome.google.com/webstore/detail/tiny-d20/kioakkagkemhjepoflhccjmabkhbiepp/reviews">Consider leaving a review if you like my extension! :)<a></h5>
+
+</body>
+</html>

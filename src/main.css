@@ -1,0 +1,178 @@
+body {
+	background-color: #FBFBFB;
+	font-family: 'Helvetica Neue', 'Open Sans', sans-serif;
+	max-width: 500px;
+	margin: 10px auto;
+}
+
+hr {
+	margin: 15px 10px;
+}
+
+hr.thin-line {
+	border: 0;
+    height: 0;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    width: 300px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/*
+	credit to http://viralpatel.net/blogs/css-radio-button-checkbox-background/
+	for the button css
+*/
+
+#top-container {
+	margin: 10px auto 0;
+	width: 320px;
+	text-align: center;
+}
+
+#die-type-container {
+	margin: 0 auto;
+	display: inline-block;
+}
+
+input[type=radio] {
+    display:none;
+}
+input[type=radio] + label {
+    display:inline-block;
+    margin:-2px;
+    padding: 0px 10px;
+    margin-top: 10px;
+    margin-bottom: 0;
+    font-size: 14px;
+    line-height: 20px;
+    color: #333;
+    cursor: pointer;
+    text-align: center;
+    vertical-align: middle;
+    border: 0px solid #ccc;
+    border-radius: 4px;
+    font-weight: bold
+}
+
+input[type=radio]:checked + label {
+    background-color:#999;
+    color: #fff;
+}
+
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+#custom-roll-container {
+	margin-top: 10px;
+}
+
+#custom-roll-container h4 {
+	font-size: small;
+	color: #ccc;
+}
+
+#custom-rolls-field {
+	text-align: center;
+	margin-top: 10px;
+	width: 200px;
+}
+
+#result {
+	font-size: x-large;
+	padding-bottom: 10px;
+}
+
+.temp_roll {
+	color: #ccc;
+}
+
+.prompt {
+	font-weight: normal;
+}
+
+.addtl-info {
+	display: inline-block;
+	width: 40%;
+}
+
+.addtl-info input {
+	width: 40px;
+	text-align: center;
+}
+
+.addtl-info h3 {
+	margin-top: 0px;
+	margin-bottom: 10px;
+}
+
+#result-container {
+	text-align: center;
+}
+
+.macroButton {
+	/*white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;*/
+	word-wrap: normal;
+	white-space: normal;
+}
+
+
+#result-container input {
+	margin: 5px 0;
+	width: 200px;
+	text-align: center;
+}
+
+#advanced {
+	text-align: center;
+}
+
+.nat-max {
+	background-color: #ADE3AA;
+}
+
+.nat-min {
+	background-color: #DEA7A9;
+}
+
+#results-table, #minmax-table {
+	table-layout: fixed;
+	border: 2px solid #ddd;
+	border-collapse: collapse;
+	text-align: center;
+	margin: 10px auto;
+}
+
+#minmax-table th {
+  font-size: x-small;
+}
+
+#results-table tr:nth-child(even){
+  background:#e5e5e5;
+}
+
+#results-table td, #minmax-table td {
+	width: 50px;
+	min-width: 50px;
+	max-width: 100px;
+	border: 1px solid #eee;
+	padding: 10px;
+	vertical-align: middle;
+}
+
+#results-table td:first-child {
+	color: #cdcdcd;
+	font-size: x-small;
+}
+
+#results-table td:last-child {
+	font-weight: bold;
+	font-size: medium;
+}
