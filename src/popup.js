@@ -7,6 +7,8 @@ function init() {
     loadConfig(function() {
         addEventHandlers();
         hideAdvancedInit();
+        loadMacrosList();
+        updateRollButton();
     });
 }
 
@@ -18,14 +20,60 @@ function loadConfig(callback) {
 }
 
 function addEventHandlers() {
-    $("#roll").click(rollClickHandler)
+    $("#roll-button").click(rollClickHandler)
     $("#toggle-advanced").click(toggleAdvanced);
     $("#options").click(openOptions);
+
+    $("#die-type-container").on("change", updateRollButton);
+    $("#num-rolls").on("input", updateRollButton);
+    $("#modifier").on("input", updateRollButton);
+}
+
+function updateRollButton() {
+    var rollButton = $("#roll-button");
+    var disabled = !DICE_NOTATION_REGEX.test(captureCurrentRollConfig().toString());
+    rollButton.prop("disabled", disabled);
+
+    var buttonLabel = "Roll " + captureCurrentRollConfig().toString() + "!";
+    if (disabled) {
+        buttonLabel = "Enter a valid roll";
+    }
+    rollButton.prop("value", buttonLabel);
 }
 
 function rollClickHandler(event) {
     var rollConfig = captureCurrentRollConfig();
     roll(rollConfig);
+}
+
+function loadMacrosList() {
+    var macrosList = config.macros;
+    if(macrosList.length > 0) {
+		var newHTML = ""
+		for(var i = 0; i < macrosList.length; i++) {
+            var name = macrosList[i].name;
+            var rollConfig = RollConfig.cast(macrosList[i].rollConfig).toString();
+			newHTML += "<input type=button class='macroButton' value='" + name + " (" + rollConfig + ")' id='macro" + i + "'>";
+		}
+		$("#macros_list").html(newHTML);
+		initMacroBindings();
+	}
+}
+
+
+function initMacroBindings() {
+    var macrosList = config.macros;
+	for(var i = 0; i < macrosList.length; i++) {
+		var macroButton = document.getElementById('macro' + i);
+		macroButton.onclick = (function(i) {
+	      return function() {
+              var rollConfig = config.macros[i].rollConfig;
+              console.log(config);
+              console.log(rollConfig);
+              roll(rollConfig);
+	      };
+	    })(i);
+	}
 }
 
 /**
@@ -112,6 +160,8 @@ function setAdvancedResultsFromArray(arr, minPossibleResult, maxPossibleResult) 
         $("#minmax-table").hide();
 	} else {
         $("#minmax-table").show();
+        var min = Math.min.apply(Math, arr);
+        var max = Math.max.apply(Math, arr);
 		setMinAndMax(min, max);
 	}
 }
