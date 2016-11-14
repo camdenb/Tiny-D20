@@ -1,8 +1,11 @@
 function RollConfig(numberOfRolls, dieType, modifier) {
-    console.log(numberOfRolls, dieType, modifier);
     this.numberOfRolls = parseInt(numberOfRolls);
     this.dieType = parseInt(dieType);
-    this.modifier = parseInt(modifier);
+    if (modifier) {
+        this.modifier = parseInt(modifier);
+    } else {
+        this.modifier = 0;
+    }
 }
 
 RollConfig.prototype.toString = function() {
@@ -11,6 +14,10 @@ RollConfig.prototype.toString = function() {
         string += "+" + this.modifier;
     }
     return string;
+}
+
+RollConfig.cast = function(rollConfig) {
+    return new RollConfig(rollConfig.numberOfRolls, rollConfig.dieType, rollConfig.modifier);
 }
 
 /**

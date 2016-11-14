@@ -11,17 +11,24 @@ function addEventHandlers() {
     $("#color").change(saveCurrentConfiguration);
     $("#alwaysShowAdvanced").change(saveCurrentConfiguration);
     $("#rollAnimation").change(saveCurrentConfiguration);
+    resetMacroInputHandlers();
+}
+
+function resetMacroInputHandlers() {
+    $("#macro_name").off();
+    $("#macro_value").off();
+    $("#btn_create").off();
 
     $("#macro_name").on("input", validateMacro);
     $("#macro_value").on("input", validateMacro);
-
-    $("#btn_create").click(createMacro);
+    $("#btn_create").on("click", createMacro);
 }
 
 function loadOptionsFromStorage() {
     chrome.storage.sync.get(PRIMARY_CONFIG_KEY, function(items) {
         var config = items[PRIMARY_CONFIG_KEY];
         setConfiguration(config);
+        console.log(config);
     });
 }
 
@@ -30,6 +37,7 @@ function setConfiguration(config) {
     $("#color").val(config.iconColor);
     $("#alwaysShowAdvanced").prop("checked", config.alwaysShowAdvanced);
     $("#rollAnimation").prop("checked", config.showRollAnimation);
+    updateTable();
 
     var color = config.iconColor;
     chrome.browserAction.setIcon({
@@ -42,14 +50,13 @@ function saveCurrentConfiguration() {
     var color = $("#color").val();
     var alwaysShowAdvanced = $("#alwaysShowAdvanced").prop("checked");
     var showRollAnimation = $("#rollAnimation").prop("checked");
-    var macros = []; // @TODO
+    var macros = currentConfiguration.macros;
     newConfig = new Configuration(color, alwaysShowAdvanced, showRollAnimation, macros);
+
     currentConfiguration = newConfig;
     setConfiguration(currentConfiguration);
 
-    chrome.storage.sync.set({ [PRIMARY_CONFIG_KEY]: newConfig }, function() {
-        console.log("saved!", newConfig);
-    });
+    chrome.storage.sync.set({ [PRIMARY_CONFIG_KEY]: newConfig });
 }
 
 function validateMacro() {
@@ -57,11 +64,11 @@ function validateMacro() {
     nameField = $("#macro_name");
     valueField = $("#macro_value");
 
-	if(nameField.val() == "" && valueField.val() == "") {
-		btn_create.value = "Create Macro";
-	} else {
-		btn_create.value = "Create Macro: " + nameField.val() + " (" + valueField.val() + ") ";
+    var buttonLabel = "Create Macro";
+	if(nameField.val() != "" || valueField.val() != "") {
+		buttonLabel = "Create Macro: " + nameField.val() + " (" + valueField.val() + ") ";
 	}
+    createMacroButton.prop("value", buttonLabel);
 
     createMacroButton.prop("disabled", !DICE_NOTATION_REGEX.test(valueField.val()));
 }
@@ -73,27 +80,17 @@ function createMacro() {
     var matchArr = DICE_NOTATION_REGEX.exec(valueField.val());
     var rollConfig = new RollConfig(matchArr[1], matchArr[2], matchArr[3]);
     var macro = new Macro(nameField.val(), rollConfig);
-    addMacroToTable(macro);
+    currentConfiguration.macros.push(macro);
+    console.log(currentConfiguration);
+    updateTable();
 
     nameField.val("");
     valueField.val("");
     validateMacro();
+    saveCurrentConfiguration();
 }
 
-function addMacroToTable(macro) {
-    var macro_table = document.getElementById('macro_table');
-
-    var newRow = macro_table.insertRow(macro_table.rows.length - 1);
-    var nameCell = newRow.insertCell(-1)
-    nameCell.innerHTML = macro.name;
-    var valueCell = newRow.insertCell(-1)
-    valueCell.innerHTML = macro.rollConfig;
-    var optionsCell = newRow.insertCell(-1)
-    optionsCell.innerHTML = "<input type='button' value='Edit' class='btn_edit' /><input type='button' value='Delete' class='btn_delete' />";
-    bindEvents();
-}
-
-function bindEvents() {
+function bindEventsToMacroOptions() {
     var btns_edit = document.getElementsByClassName("btn_edit");
     var btns_delete = document.getElementsByClassName("btn_delete");
 
@@ -117,19 +114,58 @@ function bindEvents() {
 }
 
 function editMacro(btn_index) {
-    var macro_table = document.getElementById('macro_table');
-	var macro_name = macro_table.rows[btn_index + 1].cells[0].innerHTML;
-	var macro_value = macro_table.rows[btn_index + 1].cells[1].innerHTML;
-	deleteMacro(btn_index);
+	var deletedMacro = deleteMacro(btn_index);
 
-    $("#macro_name").val(macro_name);
-    $("#macro_value").val(macro_value);
+    $("#macro_name").val(deletedMacro.name);
+    $("#macro_value").val(RollConfig.cast(deletedMacro.rollConfig).toString());
     validateMacro();
 }
 
 function deleteMacro(btn_index) {
-    var macro_table = document.getElementById('macro_table');
-	macro_table.deleteRow(btn_index + 1);
-	bindEvents();
-    validateMacro();
+    var removed = currentConfiguration.macros.splice(btn_index, 1);
+    updateTable();
+    return removed[0];
+}
+
+function updateTable() {
+    arr = currentConfiguration.macros;
+	var table = document.getElementById("macro_table");
+
+    // first clear the table
+    var headerHTML = table.rows[0].innerHTML;
+    var inputRowHTML = table.rows[table.rows.length - 1].innerHTML;
+
+    table.innerHTML = "";
+
+    var newRow = table.insertRow(0);
+    newRow.innerHTML = headerHTML;
+
+    // populate table from array
+	for (var i = arr.length - 1; i >= 0; i--) {
+
+        var name = arr[i].name;
+
+        var rollConfig = arr[i].rollConfig;
+        var value = RollConfig.cast(rollConfig).toString();
+        var options = "<input type='button' value='Edit' class='btn_edit' /><input type='button' value='Delete' class='btn_delete' />";
+		var newRow = table.insertRow(1);
+
+		//name column
+		var nameCell = newRow.insertCell();
+		nameCell.innerHTML = name;
+
+		//value column
+		var valueCell = newRow.insertCell();
+		valueCell.innerHTML = value;
+
+		//options column
+		var optionsCell = newRow.insertCell();
+		optionsCell.innerHTML = options;
+	};
+
+    var newLastRow = table.insertRow(-1);
+    newLastRow.innerHTML = inputRowHTML;
+    resetMacroInputHandlers();
+
+    bindEventsToMacroOptions();
 }
