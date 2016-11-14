@@ -153,5 +153,5 @@ function captureCurrentRollConfig() {
     var modifier = $("#modifier").val();
     var numberOfRolls = $("#num-rolls").val();
 
-    return new RollConfig(dieType, modifier, numberOfRolls);
+    return new RollConfig(numberOfRolls, dieType, modifier);
 }
