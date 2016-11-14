@@ -104,10 +104,12 @@ function roll(rollConfig) {
             if (!$("#result").hasClass("temp_roll")) {
                 $("#result").addClass("temp_roll");
             }
+            var time = ROLL_DELAY + (ROLLS_PER_ANIMATION - rollsLeft) * ROLL_INCREMENT;
+            time += randInt(-1, 1) * randInt(0, ROLL_DELAY / 2);
             rollTimer = setTimeout(function() {
                 roll(rollConfig);
                 rollsLeft--;
-            }, ROLL_DELAY + (ROLLS_PER_ANIMATION - rollsLeft) * ROLL_INCREMENT);
+            }, time);
         } else {
             $("#result").removeClass("temp_roll");
             rollsLeft = ROLLS_PER_ANIMATION;
@@ -115,7 +117,9 @@ function roll(rollConfig) {
         }
     }
 
-    setResult(total);
+    var minPossibleResult = rollConfig.numberOfRolls + rollConfig.modifier;
+    var maxPossibleResult = rollConfig.numberOfRolls * rollConfig.dieType + rollConfig.modifier;
+    setResult(total, minPossibleResult, maxPossibleResult);
     $("#toggle-advanced").show();
     if (config.alwaysShowAdvanced) {
         showAdvanced();
@@ -146,8 +150,16 @@ function openOptions() {
 /**
  * Takes a number and sets it to be the current roll result
  **/
-function setResult(number) {
-    $("#result").html(number);
+function setResult(number, minPossibleResult, maxPossibleResult) {
+    var result = $("#result");
+    result.html(number);
+    if(number == maxPossibleResult) {
+        result.addClass("nat-max-text");
+    } else if(number == minPossibleResult) {
+        result.addClass("nat-min-text");
+    } else {
+        result.removeClass("nat-max-text nat-min-text");
+    }
 }
 
 /**

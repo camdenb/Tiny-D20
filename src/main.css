@@ -89,7 +89,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .temp_roll {
-	color: #ccc;
+    opacity: 0.1;
 }
 
 .prompt {
@@ -140,6 +140,14 @@ input[type=number]::-webkit-outer-spin-button {
 
 .nat-min {
 	background-color: #DEA7A9;
+}
+
+.nat-max-text {
+	color: #1AC803;
+}
+
+.nat-min-text {
+	color: #FC0006;
 }
 
 #results-table, #minmax-table {
