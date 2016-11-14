@@ -1,11 +1,20 @@
 window.onload = init;
 
 var advancedIsShown = false;
-
+var config = null;
 
 function init() {
-    addEventHandlers();
-    hideAdvancedInit();
+    loadConfig(function() {
+        addEventHandlers();
+        hideAdvancedInit();
+    });
+}
+
+function loadConfig(callback) {
+    chrome.storage.sync.get(PRIMARY_CONFIG_KEY, function(items) {
+        config = items[PRIMARY_CONFIG_KEY];
+        callback();
+    });
 }
 
 function addEventHandlers() {
@@ -34,6 +43,9 @@ function roll(rollConfig) {
 
     setResult(total);
     $("#toggle-advanced").show();
+    if (config.alwaysShowAdvanced) {
+        showAdvanced();
+    }
     setAdvancedResultsFromArray(rollsArray, 1, rollConfig.dieType);
 }
 

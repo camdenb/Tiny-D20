@@ -1,6 +1,5 @@
 window.onload = init;
 
-var PRIMARY_CONFIG_KEY = "primary_configuration";
 var currentConfiguration = null;
 
 function init() {
@@ -23,10 +22,15 @@ function loadOptionsFromStorage() {
 
 function setConfiguration(config) {
     currentConfiguration = config;
-    console.log("retrieved!", config);
     $("#color").val(config.iconColor);
     $("#alwaysShowAdvanced").prop("checked", config.alwaysShowAdvanced);
     $("#rollAnimation").prop("checked", config.showRollAnimation);
+
+    var color = config.iconColor;
+    chrome.browserAction.setIcon({
+        path: {"19": "assets/icon19-" + color + "-outline.png",
+            "38": "assets/icon38-" + color + "-outline.png"	}
+    });
 }
 
 function saveCurrentConfiguration() {
@@ -36,6 +40,7 @@ function saveCurrentConfiguration() {
     var macros = []; // @TODO
     newConfig = new Configuration(color, alwaysShowAdvanced, showRollAnimation, macros);
     currentConfiguration = newConfig;
+    setConfiguration(currentConfiguration);
 
     chrome.storage.sync.set({ [PRIMARY_CONFIG_KEY]: newConfig }, function() {
         console.log("saved!", newConfig);
