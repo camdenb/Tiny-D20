@@ -1,10 +1,10 @@
 var DEFAULT_CONFIGURATION = new Configuration("white", false, true, [], false);
 
 function RollConfig(numberOfRolls, dieType, modifier) {
-    this.numberOfRolls = parseInt(numberOfRolls);
+    this.numberOfRolls = numberOfRolls;
     this.dieType = parseInt(dieType);
-    if (modifier) {
-        this.modifier = parseInt(modifier);
+    if (modifier && modifier != 0) {
+        this.modifier = modifier;
     } else {
         this.modifier = 0;
     }

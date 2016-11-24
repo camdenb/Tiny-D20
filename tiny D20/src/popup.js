@@ -33,14 +33,27 @@ function addEventHandlers() {
 
 function updateRollButton() {
     var rollButton = $("#roll-button");
-    var disabled = !DICE_NOTATION_REGEX.test(captureCurrentRollConfig().toString());
+    var currentRollConfig = captureCurrentRollConfig();
+    // updateRollInput(currentRollConfig);
+    var disabled = !DICE_NOTATION_REGEX.test(currentRollConfig.toString());
     rollButton.prop("disabled", disabled);
 
-    var buttonLabel = "Roll " + captureCurrentRollConfig().toString() + "!";
+    var buttonLabel = "Roll " + currentRollConfig.toString() + "!";
     if (disabled) {
         buttonLabel = "Enter a valid roll";
     }
     rollButton.prop("value", buttonLabel);
+}
+
+/**
+ * Given a RollConfig, updates the user input for Number of Rolls and Modifier.
+ **/
+function updateRollInput(rollConfig) {
+    // Sets the input to either the given RollConfig, or 0 if that value is invalid.
+    var numberOfRolls = rollConfig.numberOfRolls ? rollConfig.numberOfRolls : 0;
+    var modifier = rollConfig.modifier ? rollConfig.modifier : 0;
+    $("#num-rolls").val(numberOfRolls)
+    $("#modifier").val(modifier)
 }
 
 function rollClickHandler(event) {
@@ -92,12 +105,12 @@ function initMacroBindings() {
 function roll(rollConfig) {
     var total = 0;
     var rollsArray = [];
-    for (var rollNumber = 0; rollNumber < rollConfig.numberOfRolls; rollNumber++) {
+    for (var rollNumber = 0; rollNumber < parseInt(rollConfig.numberOfRolls); rollNumber++) {
         var currentRoll = randInt(1, rollConfig.dieType);
         total += currentRoll;
         rollsArray[rollNumber] = currentRoll;
     }
-    total += rollConfig.modifier;
+    total += parseInt(rollConfig.modifier);
 
     if (config.showRollAnimation) {
         if (rollsLeft > 0) {
