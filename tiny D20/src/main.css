@@ -84,8 +84,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 #result {
-	font-size: x-large;
-	padding-bottom: 10px;
+    font-size: x-large;
+    font-weight: normal;
 }
 
 .temp_roll {
