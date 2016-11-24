@@ -17,6 +17,7 @@ hr.thin-line {
     width: 300px;
     margin-left: auto;
     margin-right: auto;
+    display: none;
 }
 
 /*
@@ -31,7 +32,7 @@ hr.thin-line {
 }
 
 #die-type-container {
-	margin: 0 auto;
+	margin: 0 auto 2em auto;
 	display: inline-block;
 }
 
@@ -86,7 +87,7 @@ input[type=number]::-webkit-outer-spin-button {
 #result {
     font-size: 3em;
     font-weight: normal;
-    padding-bottom: 0.5em;
+    padding: 0.65em 0;
 }
 
 .temp_roll {
