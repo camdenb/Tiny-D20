@@ -27,7 +27,7 @@ function resetMacroInputHandlers() {
 
 function loadOptionsFromStorage() {
     chrome.storage.sync.get(PRIMARY_CONFIG_KEY, function(items) {
-        var config = items[PRIMARY_CONFIG_KEY];
+        var config = items[PRIMARY_CONFIG_KEY] || DEFAULT_CONFIGURATION;
         setConfiguration(config);
         console.log(config);
     });

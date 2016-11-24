@@ -16,7 +16,7 @@ function init() {
 
 function loadConfig(callback) {
     chrome.storage.sync.get(PRIMARY_CONFIG_KEY, function(items) {
-        config = items[PRIMARY_CONFIG_KEY];
+        config = items[PRIMARY_CONFIG_KEY] || DEFAULT_CONFIGURATION;
         callback();
     });
 }
