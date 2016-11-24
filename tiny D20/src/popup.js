@@ -34,8 +34,10 @@ function addEventHandlers() {
 function updateRollButton() {
     var rollButton = $("#roll-button");
     var currentRollConfig = captureCurrentRollConfig();
-    // updateRollInput(currentRollConfig);
     var disabled = !DICE_NOTATION_REGEX.test(currentRollConfig.toString());
+    if (currentRollConfig.numberOfRolls <= 0) {
+        disabled = true;
+    }
     rollButton.prop("disabled", disabled);
 
     var buttonLabel = "Roll " + currentRollConfig.toString() + "!";
@@ -43,17 +45,6 @@ function updateRollButton() {
         buttonLabel = "Enter a valid roll";
     }
     rollButton.prop("value", buttonLabel);
-}
-
-/**
- * Given a RollConfig, updates the user input for Number of Rolls and Modifier.
- **/
-function updateRollInput(rollConfig) {
-    // Sets the input to either the given RollConfig, or 0 if that value is invalid.
-    var numberOfRolls = rollConfig.numberOfRolls ? rollConfig.numberOfRolls : 0;
-    var modifier = rollConfig.modifier ? rollConfig.modifier : 0;
-    $("#num-rolls").val(numberOfRolls)
-    $("#modifier").val(modifier)
 }
 
 function rollClickHandler(event) {
