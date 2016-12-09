@@ -29,7 +29,6 @@ function loadOptionsFromStorage() {
     chrome.storage.sync.get(PRIMARY_CONFIG_KEY, function(items) {
         var config = items[PRIMARY_CONFIG_KEY] || DEFAULT_CONFIGURATION;
         setConfiguration(config);
-        console.log(config);
     });
 }
 
@@ -84,7 +83,6 @@ function createMacro() {
     var rollConfig = new RollConfig(matchArr[1], matchArr[2], matchArr[3]);
     var macro = new Macro(nameField.val(), rollConfig);
     currentConfiguration.macros.push(macro);
-    console.log(currentConfiguration);
     updateTable();
 
     nameField.val("");
