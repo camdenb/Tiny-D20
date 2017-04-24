@@ -82,8 +82,6 @@ function initMacroBindings() {
 		macroButton.onclick = (function(i) {
 	      return function() {
               var rollConfig = config.macros[i].rollConfig;
-              console.log(config);
-              console.log(rollConfig);
               roll(rollConfig);
 	      };
 	    })(i);
@@ -121,8 +119,8 @@ function roll(rollConfig) {
         }
     }
 
-    var minPossibleResult = rollConfig.numberOfRolls + rollConfig.modifier;
-    var maxPossibleResult = rollConfig.numberOfRolls * rollConfig.dieType + rollConfig.modifier;
+    var minPossibleResult = parseInt(rollConfig.numberOfRolls) + rollConfig.modifier;
+    var maxPossibleResult = parseInt(rollConfig.numberOfRolls) * rollConfig.dieType + rollConfig.modifier;
     setResult(total, minPossibleResult, maxPossibleResult);
     $("#toggle-advanced").show();
     if (config.alwaysShowAdvanced) {
