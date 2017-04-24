@@ -155,12 +155,12 @@ function openOptions() {
 function setResult(number, minPossibleResult, maxPossibleResult) {
     var result = $("#result");
     result.html(number);
+
+    result.removeClass("nat-max-text nat-min-text");
     if (number == maxPossibleResult) {
         result.addClass("nat-max-text");
     } else if (number == minPossibleResult) {
         result.addClass("nat-min-text");
-    } else {
-        result.removeClass("nat-max-text nat-min-text");
     }
 }
 
