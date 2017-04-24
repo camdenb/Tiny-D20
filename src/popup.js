@@ -55,9 +55,9 @@ function rollClickHandler(event) {
 
 function loadMacrosList() {
     var macrosList = config.macros;
-    if(macrosList.length > 0) {
-		var newHTML = ""
-		for(var i = 0; i < macrosList.length; i++) {
+    if (macrosList.length > 0) {
+        var newHTML = ""
+        for(var i = 0; i < macrosList.length; i++) {
             var name = macrosList[i].name;
             var rollConfig = RollConfig.cast(macrosList[i].rollConfig).toString();
             var rollConfigHTML = " (" + rollConfig + ")";
@@ -67,25 +67,25 @@ function loadMacrosList() {
                 newHTML += rollConfigHTML;
             }
             var htmlEnd = "' id='macro" + i + "'>";
-			newHTML += htmlEnd;
-		}
-		$("#macros_list").html(newHTML);
-		initMacroBindings();
-	}
+            newHTML += htmlEnd;
+        }
+        $("#macros_list").html(newHTML);
+        initMacroBindings();
+    }
 }
 
 
 function initMacroBindings() {
     var macrosList = config.macros;
-	for(var i = 0; i < macrosList.length; i++) {
-		var macroButton = document.getElementById('macro' + i);
-		macroButton.onclick = (function(i) {
-	      return function() {
-              var rollConfig = config.macros[i].rollConfig;
-              roll(rollConfig);
-	      };
-	    })(i);
-	}
+    for(var i = 0; i < macrosList.length; i++) {
+        var macroButton = document.getElementById('macro' + i);
+        macroButton.onclick = (function(i) {
+            return function() {
+                var rollConfig = config.macros[i].rollConfig;
+                roll(rollConfig);
+            };
+        })(i);
+    }
 }
 
 /**
@@ -155,9 +155,9 @@ function openOptions() {
 function setResult(number, minPossibleResult, maxPossibleResult) {
     var result = $("#result");
     result.html(number);
-    if(number == maxPossibleResult) {
+    if (number == maxPossibleResult) {
         result.addClass("nat-max-text");
-    } else if(number == minPossibleResult) {
+    } else if (number == minPossibleResult) {
         result.addClass("nat-min-text");
     } else {
         result.removeClass("nat-max-text nat-min-text");
@@ -169,41 +169,41 @@ function setResult(number, minPossibleResult, maxPossibleResult) {
  * and populates the "Advanced Results" section.
  **/
 function setAdvancedResultsFromArray(arr, minPossibleResult, maxPossibleResult) {
-	var table = document.getElementById("results-table");
+    var table = document.getElementById("results-table");
 
     // clear the table
-	table.innerHTML = "";
+    table.innerHTML = "";
 
     // populate table from array
-	for (var i = arr.length - 1; i >= 0; i--) {
+    for (var i = arr.length - 1; i >= 0; i--) {
 
-		var num = arr[i];
-		var newRow = table.insertRow(0);
+        var num = arr[i];
+        var newRow = table.insertRow(0);
 
-		//count column
-		var countCell = newRow.insertCell(0);
-		countCell.innerHTML = "#" + (i + 1);
+        //count column
+        var countCell = newRow.insertCell(0);
+        countCell.innerHTML = "#" + (i + 1);
 
-		//roll column
-		var rollCell = newRow.insertCell(-1);
-		rollCell.innerHTML = num;
+        //roll column
+        var rollCell = newRow.insertCell(-1);
+        rollCell.innerHTML = num;
 
-        if(num == maxPossibleResult) {
+        if (num == maxPossibleResult) {
             rollCell.className += " nat-max";
-        } else if(num == minPossibleResult) {
+        } else if (num == minPossibleResult) {
             rollCell.className += " nat-min";
         }
-	};
+    };
 
     // hide the min/max view if the array length == 1
-	if(arr.length == 1) {
+    if (arr.length == 1) {
         $("#minmax-table").hide();
-	} else {
+    } else {
         $("#minmax-table").show();
         var min = Math.min.apply(Math, arr);
         var max = Math.max.apply(Math, arr);
-		setMinAndMax(min, max);
-	}
+        setMinAndMax(min, max);
+    }
 }
 
 function setMinAndMax(min, max) {
@@ -212,21 +212,21 @@ function setMinAndMax(min, max) {
 }
 
 function toggleAdvanced() {
-	if(advancedIsShown) {
-		hideAdvanced();
-	} else {
-		showAdvanced();
-	}
+    if (advancedIsShown) {
+        hideAdvanced();
+    } else {
+        showAdvanced();
+    }
 }
 
 function showAdvanced() {
     $("#advanced").show();
-	advancedIsShown = true;
+    advancedIsShown = true;
 }
 
 function hideAdvanced() {
     $("#advanced").hide();
-	advancedIsShown = false;
+    advancedIsShown = false;
 }
 
 function hideAdvancedInit() {

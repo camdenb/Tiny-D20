@@ -67,9 +67,9 @@ function validateMacro() {
     valueField = $("#macro_value");
 
     var buttonLabel = "Create Macro";
-	if(nameField.val() != "" || valueField.val() != "") {
-		buttonLabel = "Create Macro: " + nameField.val() + " (" + valueField.val() + ") ";
-	}
+    if(nameField.val() != "" || valueField.val() != "") {
+        buttonLabel = "Create Macro: " + nameField.val() + " (" + valueField.val() + ") ";
+    }
     createMacroButton.prop("value", buttonLabel);
 
     createMacroButton.prop("disabled", !DICE_NOTATION_REGEX.test(valueField.val()));
@@ -115,7 +115,7 @@ function bindEventsToMacroOptions() {
 }
 
 function editMacro(btn_index) {
-	var deletedMacro = deleteMacro(btn_index);
+    var deletedMacro = deleteMacro(btn_index);
 
     $("#macro_name").val(deletedMacro.name);
     $("#macro_value").val(RollConfig.cast(deletedMacro.rollConfig).toString());
@@ -130,7 +130,7 @@ function deleteMacro(btn_index) {
 
 function updateTable() {
     arr = currentConfiguration.macros;
-	var table = document.getElementById("macro_table");
+    var table = document.getElementById("macro_table");
 
     // first clear the table
     var headerHTML = table.rows[0].innerHTML;
@@ -142,27 +142,27 @@ function updateTable() {
     newRow.innerHTML = headerHTML;
 
     // populate table from array
-	for (var i = arr.length - 1; i >= 0; i--) {
+    for (var i = arr.length - 1; i >= 0; i--) {
 
         var name = arr[i].name;
 
         var rollConfig = arr[i].rollConfig;
         var value = RollConfig.cast(rollConfig).toString();
         var options = "<input type='button' value='Edit' class='btn_edit' /><input type='button' value='Delete' class='btn_delete' />";
-		var newRow = table.insertRow(1);
+        var newRow = table.insertRow(1);
 
-		//name column
-		var nameCell = newRow.insertCell();
-		nameCell.innerHTML = name;
+        //name column
+        var nameCell = newRow.insertCell();
+        nameCell.innerHTML = name;
 
-		//value column
-		var valueCell = newRow.insertCell();
-		valueCell.innerHTML = value;
+        //value column
+        var valueCell = newRow.insertCell();
+        valueCell.innerHTML = value;
 
-		//options column
-		var optionsCell = newRow.insertCell();
-		optionsCell.innerHTML = options;
-	};
+        //options column
+        var optionsCell = newRow.insertCell();
+        optionsCell.innerHTML = options;
+    };
 
     var newLastRow = table.insertRow(-1);
     newLastRow.innerHTML = inputRowHTML;
