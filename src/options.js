@@ -80,7 +80,7 @@ function createMacro() {
     valueField = $("#macro_value");
 
     var matchArr = DICE_NOTATION_REGEX.exec(valueField.val());
-    var rollConfig = new RollConfig(matchArr[1], matchArr[2], matchArr[3]);
+    var rollConfig = new RollConfig(Number(matchArr[1]), Number(matchArr[2]), Number(matchArr[3]));
     var macro = new Macro(nameField.val(), rollConfig);
     currentConfiguration.macros.push(macro);
     updateTable();

@@ -13,7 +13,8 @@ function RollConfig(numberOfRolls, dieType, modifier) {
 RollConfig.prototype.toString = function() {
     var string = this.numberOfRolls + "d" + this.dieType;
     if (this.modifier) {
-        string += this.modifier;
+        var sign = this.modifier > 0 ? '+' : ''
+        string += sign + this.modifier;
     }
     return string;
 }

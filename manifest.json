@@ -1,10 +1,10 @@
 {
-  "manifest_version" : 2,
+  "manifest_version": 2,
 
   "name": "Tiny D20",
   "short_name": "Tiny D20",
   "description": "A tiny dice set that lives in your toolbar!",
-  "version": "3.0.3.1",
+  "version": "3.0.3.2",
 
   "author": "camdenb",
   "offline_enabled": true,
@@ -21,13 +21,9 @@
   },
 
   "browser_action": {
-		"default_icon": "icons/icon38-white-outline.png",
+    "default_icon": "icons/icon38-white-outline.png",
     "default_popup": "src/popup.html",
     "default_title": "Roll me!"
   },
-  "permissions": [
-    "storage"
-  ]
+  "permissions": ["storage"]
 }
-
-
